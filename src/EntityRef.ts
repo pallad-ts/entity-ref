@@ -7,14 +7,13 @@ export interface EntityRef<TType> {
 }
 
 export namespace EntityRef {
-    export type RestParameters<T> = Omit<T, 'type' | typeof INSTANCE_SYMBOL>;
-
     export type Enchanted<T> = T & { [INSTANCE_SYMBOL]: true };
 
     /**
      * Checks if provided value is entity ref of given type
      */
     export function is<T extends EntityRef<TType>, TType>(type: TType, value: any): value is Enchanted<T> {
+        //tslint:disable-next-line: strict-comparisons
         return isPred.object(value) && value[INSTANCE_SYMBOL] === true && value.type === type;
     }
 
