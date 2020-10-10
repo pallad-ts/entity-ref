@@ -1,0 +1,35 @@
+{
+  "name": "@pallad/entity-ref",
+  "version": "1.0.0",
+  "description": "",
+  "main": "compiled/index.js",
+  "types": "compiled/index.d.ts",
+  "scripts": {
+    "test": "pallad-scripts test",
+    "lint": "pallad-scripts lint",
+    "compile": "pallad-scripts compile"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "compiled"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pallad-ts/entity-ref.git"
+  },
+  "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pallad-ts/entity-ref/issues"
+  },
+  "homepage": "https://github.com/pallad-ts/entity-ref#readme",
+  "devDependencies": {
+    "@pallad/scripts": "^1.1.4",
+    "conditional-type-checks": "^1.0.5"
+  },
+  "dependencies": {
+    "predicates": "^2.0.3"
+  }
+}
