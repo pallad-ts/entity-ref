@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/pallad-ts/entity-ref#readme",
   "devDependencies": {
-    "@pallad/scripts": "^1.1.4",
+    "@pallad/scripts": "2.0.0-alpha.11",
     "conditional-type-checks": "^1.0.5"
   },
   "dependencies": {
