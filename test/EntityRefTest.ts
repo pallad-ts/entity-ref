@@ -8,35 +8,42 @@ describe('EntityRef', () => {
 	it('creating', () => {
 		const ref = EntityRef.create(TYPE, DATA);
 		expect(ref)
-			.toMatchObject(DATA);
+			.toEqual(new EntityRef(TYPE, DATA));
 
 		assert<IsExact<typeof ref,
-			EntityRef.Enchanted<EntityRef<typeof TYPE> & typeof DATA>>>(true);
+			EntityRef<typeof TYPE, typeof DATA>>>(true);
 	});
 
 	describe('checking type', () => {
 		it('success for ref created by EntityRef.create', () => {
 			const ref = EntityRef.create(TYPE, DATA);
-			const result = EntityRef.is('user', ref);
+			const result = EntityRef.isOfType(TYPE, ref);
 			expect(result)
 				.toEqual(true);
 		});
 
 		it('type check', () => {
 			const ref = {} as any;
-			if (EntityRef.is(TYPE, ref)) {
-				assert<IsExact<typeof ref, EntityRef.Enchanted<EntityRef<typeof TYPE>>>>(true);
+			if (EntityRef.is(ref)) {
+				assert<IsExact<typeof ref, EntityRef<any, any>>>(true);
+			}
+		});
+
+		it('type check and type', () => {
+			const ref = {} as any;
+			if (EntityRef.isOfType(TYPE, ref)) {
+				assert<IsExact<typeof ref, EntityRef<typeof TYPE, any>>>(true);
 			}
 		});
 
 		it('fail for ref of other type', () => {
 			const ref = EntityRef.create(TYPE, DATA);
-			expect(EntityRef.is('account', ref))
+			expect(EntityRef.isOfType('account', ref))
 				.toEqual(false);
 		});
 
 		it('fail for ref with raw data', () => {
-			expect(EntityRef.is('user', DATA))
+			expect(EntityRef.isOfType('user', DATA))
 				.toEqual(false);
 		});
 	});

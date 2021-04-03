@@ -1,30 +1,21 @@
-import * as isPred from 'predicates';
-
-const INSTANCE_SYMBOL = Symbol('entity_ref_instance');
-
-export interface EntityRef<TType> {
-	readonly type: TType;
-}
-
-export namespace EntityRef {
-	export type Enchanted<T> = T & { [INSTANCE_SYMBOL]: true };
+export class EntityRef<TType, TData extends {}> {
+	constructor(readonly type: TType, readonly data: TData) {
+		Object.freeze(this);
+		Object.freeze(this.data);
+	}
 
 	/**
 	 * Checks if provided value is entity ref of given type
 	 */
-	export function is<T extends EntityRef<TType>, TType>(type: TType, value: any): value is Enchanted<T> {
-		//tslint:disable-next-line: strict-comparisons
-		return isPred.object(value) && value[INSTANCE_SYMBOL] === true && value.type === type;
+	static is(value: any): value is EntityRef<any, any> {
+		return value instanceof EntityRef;
 	}
 
-	/**
-	 * Creates entity ref
-	 */
-	export function create<T extends object, TType>(type: TType, data: T): Enchanted<EntityRef<TType> & T> {
-		return Object.freeze({
-			...data,
-			type,
-			[INSTANCE_SYMBOL]: true
-		});
+	static isOfType<TType>(type: TType, value: any): value is EntityRef<TType, any> {
+		return EntityRef.is(value) && value.type === type;
+	}
+
+	static create<T extends object, TType>(type: TType, data: T): EntityRef<TType, T> {
+		return new EntityRef<TType, T>(type, data);
 	}
 }

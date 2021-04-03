@@ -17,7 +17,7 @@ export function createFactory<TType,
 
 	f.typeName = type;
 	f.is = (value: any) => {
-		return EntityRef.is(type, value);
+		return EntityRef.isOfType(type, value);
 	};
 	f.fromData = mainFactory;
 
@@ -35,17 +35,17 @@ export function createFactory<TType,
 }
 
 export interface Factory<TType, TFactory extends (...args: any[]) => any> {
-	(...args: Parameters<TFactory>): EntityRef.Enchanted<ReturnType<TFactory> & EntityRef<TType>>;
+	(...args: Parameters<TFactory>): EntityRef<TType, ReturnType<TFactory>>;
 
 	/**
 	 * Creates ref from pure data (without type)
 	 */
-	fromData(data: ReturnType<TFactory>): EntityRef.Enchanted<ReturnType<TFactory> & EntityRef<TType>>;
+	fromData(data: ReturnType<TFactory>): EntityRef<TType, ReturnType<TFactory>>;
 
 	/**
 	 * Checks if value is entity ref
 	 */
-	is(value: any): value is EntityRef.Enchanted<ReturnType<TFactory> & EntityRef<TType>>;
+	is(value: any): value is EntityRef<TType, ReturnType<TFactory>>;
 
 	typeName: TType;
 }

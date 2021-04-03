@@ -3,7 +3,6 @@ import {assert, IsExact} from "conditional-type-checks";
 import {EntityRef} from "@src/EntityRef";
 
 describe('createFactory', () => {
-
 	const TYPE = 'user' as const;
 	const FACTORY = createFactory(TYPE, (id: number, name: string) => {
 		return {id, name};
@@ -17,15 +16,14 @@ describe('createFactory', () => {
 	it('creating', () => {
 		const ref = FACTORY(10, 'test');
 		expect(ref)
-			.toMatchObject({
-				type: TYPE,
+			.toEqual(new EntityRef(TYPE, {
 				id: 10,
 				name: 'test'
-			})
+			}))
 		assert<IsExact<Parameters<typeof FACTORY>, [number, string]>>(true);
 		assert<IsExact<(typeof ref)['type'], 'user'>>(true);
 		assert<IsExact<ReturnType<typeof FACTORY>,
-			EntityRef.Enchanted<EntityRef<typeof TYPE> & { id: number, name: string }>>>(true);
+			EntityRef<typeof TYPE, { id: number, name: string }>>>(true);
 	});
 
 	it('creating from data', () => {
@@ -33,7 +31,7 @@ describe('createFactory', () => {
 		const ref = FACTORY.fromData(data);
 		expect(ref)
 			.toMatchObject({
-				...data,
+				data,
 				type: TYPE,
 			});
 
