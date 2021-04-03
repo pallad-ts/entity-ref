@@ -1,13 +1,14 @@
 {
   "name": "@pallad/entity-ref",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
   "scripts": {
     "test": "pallad-scripts test",
     "lint": "pallad-scripts lint",
-    "compile": "pallad-scripts compile"
+    "compile": "pallad-scripts compile",
+    "prepack": "npm run compile"
   },
   "publishConfig": {
     "access": "public"
