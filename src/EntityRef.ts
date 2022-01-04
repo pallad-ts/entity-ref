@@ -1,3 +1,10 @@
+import * as is from 'predicates'
+
+const isType = is.struct({
+	type: String,
+	data: is.defined
+});
+
 export class EntityRef<TType, TData extends {}> {
 	constructor(readonly type: TType, readonly data: TData) {
 		Object.freeze(this);
@@ -8,7 +15,7 @@ export class EntityRef<TType, TData extends {}> {
 	 * Checks if provided value is entity ref of given type
 	 */
 	static is(value: any): value is EntityRef<any, any> {
-		return value instanceof EntityRef;
+		return isType(value);
 	}
 
 	static isOfType<TType>(type: TType, value: any): value is EntityRef<TType, any> {
