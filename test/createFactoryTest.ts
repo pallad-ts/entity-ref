@@ -92,7 +92,6 @@ describe('createFactory', () => {
 
 			expect(factory.num)
 				.toBeUndefined();
-
 			expect(factory.str)
 				.toBeUndefined();
 			expect('undef' in factory)
