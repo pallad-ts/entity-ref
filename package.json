@@ -1,7 +1,7 @@
 {
   "name": "@pallad/entity-ref",
-  "version": "2.0.1",
-  "description": "",
+  "version": "2.0.2",
+  "description": "Create small references to entities",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
   "scripts": {
@@ -10,6 +10,12 @@
     "compile": "pallad-scripts compile",
     "prepack": "npm run compile"
   },
+  "keywords": [
+    "entity",
+    "reference",
+    "entity reference",
+    "typescript"
+  ],
   "publishConfig": {
     "access": "public"
   },
