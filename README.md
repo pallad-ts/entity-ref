@@ -50,6 +50,7 @@ const userRefFactory = createFactory(
 const ref = userRefFactory('1'); // {type: 'user', data: {id: '1'}}
 ```
 
+## Testing type
 You can check if ref is actually a ref for given type using `.is` method.
 
 ```typescript
@@ -62,6 +63,15 @@ const ref = articleRefFactory('1'); // {type: 'article', data: {id: '1'}}
 
 userRefFactory.is(ref) // false
 articleRefFactory.is(ref) // true
+```
+
+`.is` plays a role of type guard as well.
+```typescript
+if (articleRefFactory.is(ref)) {
+    ref.type // 'article';
+	ref.data.id // 👍 typescript knows shape of article refs so no error here
+	ref.data.someOtherProperty // ⚠️ this fails
+}
 ```
 
 ## Extra factories
