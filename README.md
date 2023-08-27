@@ -76,7 +76,7 @@ if (articleRefFactory.is(ref)) {
 
 ## Extra factories
 
-Third argument of `createFactory` accepts an object with extra factories in result factory object.
+Third argument of `createFactory` accepts an object with extra factories in final factory object.
 
 ```typescript
 class Article {

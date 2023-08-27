@@ -38,6 +38,14 @@ describe('createFactory', () => {
 		assert<IsExact<Parameters<typeof FACTORY.fromData>, [{ id: number, name: string }]>>(true);
 	});
 
+	it('defining factory type without `as const`', () => {
+		const factory1 = createFactory('type1', (id: string) => ({id}));
+		const factory2 = createFactory('type2' as const, (id: string) => ({id}));
+
+		assert<IsExact<typeof factory1.typeName, 'type1'>>(true);
+		assert<IsExact<typeof factory2.typeName, 'type2'>>(true);
+	});
+
 	it('checking type', () => {
 		const ref = FACTORY(10, 'foo');
 		expect(FACTORY.is(ref))

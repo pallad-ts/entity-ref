@@ -1,7 +1,7 @@
 import {EntityRef} from "./EntityRef";
 import * as is from 'predicates';
 
-export function createFactory<TType,
+export function createFactory<TType extends string,
 	TFactory extends (...args: any[]) => any,
 	TExtraFactories extends Record<string, (...args: any[]) => ReturnType<TFactory>>>(
 	type: TType,
@@ -34,7 +34,7 @@ export function createFactory<TType,
 	return f as any;
 }
 
-export interface Factory<TType, TFactory extends (...args: any[]) => any> {
+export interface Factory<TType extends string, TFactory extends (...args: any[]) => any> {
 	(...args: Parameters<TFactory>): EntityRef<TType, ReturnType<TFactory>>;
 
 	/**

@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/pallad-ts/entity-ref#readme",
   "devDependencies": {
-    "@pallad/scripts": "^2",
+    "@pallad/scripts": "^3",
     "conditional-type-checks": "^1.0.5"
   },
   "dependencies": {

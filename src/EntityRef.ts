@@ -5,7 +5,7 @@ const isType = is.struct({
 	data: is.defined
 });
 
-export class EntityRef<TType, TData extends {}> {
+export class EntityRef<TType extends string, TData extends {}> {
 	constructor(readonly type: TType, readonly data: TData) {
 		Object.freeze(this);
 		Object.freeze(this.data);
@@ -18,11 +18,11 @@ export class EntityRef<TType, TData extends {}> {
 		return isType(value);
 	}
 
-	static isOfType<TType>(type: TType, value: any): value is EntityRef<TType, any> {
+	static isOfType<TType extends string>(type: TType, value: any): value is EntityRef<TType, any> {
 		return EntityRef.is(value) && value.type === type;
 	}
 
-	static create<T extends object, TType>(type: TType, data: T): EntityRef<TType, T> {
+	static create<TType extends string, T extends object>(type: TType, data: T): EntityRef<TType, T> {
 		return new EntityRef<TType, T>(type, data);
 	}
 }
