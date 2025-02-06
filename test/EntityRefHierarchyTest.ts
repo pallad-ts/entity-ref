@@ -1,6 +1,8 @@
 import {createFactory} from "@src/createFactory";
 import {EntityRefHierarchy} from "@src/EntityRefHierarchy";
 
+import {assert, IsExact} from "conditional-type-checks";
+
 describe('EntityRefHierarchy', () => {
 
 	const factoryWorkspace = createFactory('workspace', (id: number) => id);
@@ -22,7 +24,7 @@ describe('EntityRefHierarchy', () => {
 
 
 	describe('simple hierarchy', () => {
-		const hierarchy = new EntityRefHierarchy([REF_WORKSPACE, REF_PROJECT, REF_COLLECTION]);
+		const hierarchy = new EntityRefHierarchy([REF_WORKSPACE, REF_PROJECT, REF_COLLECTION] as const);
 
 		it('getting root and leaf refs', () => {
 			expect(hierarchy.root)
@@ -40,6 +42,17 @@ describe('EntityRefHierarchy', () => {
 				.toEqual(REF_COLLECTION);
 		});
 
+
+		it('types test', () => {
+			const workspaceRef = hierarchy.getRef('workspace');
+			const projectRef = hierarchy.getRef('project');
+			const collectionRef = hierarchy.getRef('collection');
+
+			assert<IsExact<typeof workspaceRef, ReturnType<typeof factoryWorkspace>>>(true);
+			assert<IsExact<typeof projectRef, ReturnType<typeof factoryProject>>>(true);
+			assert<IsExact<typeof collectionRef, ReturnType<typeof factoryCollection>>>(true);
+		});
+
 		it('iterating', () => {
 			expect([...hierarchy])
 				.toEqual([REF_WORKSPACE, REF_PROJECT, REF_COLLECTION]);
@@ -51,7 +64,7 @@ describe('EntityRefHierarchy', () => {
 			undefined as ReturnType<typeof factoryWorkspace> | undefined,
 			REF_PROJECT,
 			REF_COLLECTION
-		]);
+		] as const);
 
 		it('getting root and leaf refs', () => {
 			expect(hierarchy.root)
@@ -67,6 +80,16 @@ describe('EntityRefHierarchy', () => {
 				.toEqual(REF_PROJECT);
 			expect(hierarchy.getRef('collection'))
 				.toEqual(REF_COLLECTION);
+		});
+
+		it('types test', () => {
+			const workspaceRef = hierarchy.getRef('workspace');
+			const projectRef = hierarchy.getRef('project');
+			const collectionRef = hierarchy.getRef('collection');
+
+			assert<IsExact<typeof workspaceRef, ReturnType<typeof factoryWorkspace> | undefined>>(true);
+			assert<IsExact<typeof projectRef, ReturnType<typeof factoryProject>>>(true);
+			assert<IsExact<typeof collectionRef, ReturnType<typeof factoryCollection>>>(true);
 		});
 
 		it('iterating', () => {
