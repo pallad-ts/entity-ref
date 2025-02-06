@@ -14,7 +14,10 @@ describe('EntityRefHierarchy', () => {
 
 	it('fails to create hierarchy without refs', () => {
 		expect(() => new EntityRefHierarchy([] as never))
-			.toThrowError('EntityRefHierarchy must contain at least 1 element');
+			.toThrowError('EntityRefHierarchy must contain at least 1 ref');
+
+		expect(() => new EntityRefHierarchy([undefined, undefined] as never))
+			.toThrowError('EntityRefHierarchy must contain at least 1 ref');
 	});
 
 
@@ -22,9 +25,9 @@ describe('EntityRefHierarchy', () => {
 		const hierarchy = new EntityRefHierarchy([REF_WORKSPACE, REF_PROJECT, REF_COLLECTION]);
 
 		it('getting root and leaf refs', () => {
-			expect(hierarchy.rootRef())
+			expect(hierarchy.root)
 				.toEqual(REF_WORKSPACE);
-			expect(hierarchy.leafRef())
+			expect(hierarchy.leaf)
 				.toEqual(REF_COLLECTION);
 		});
 
@@ -44,29 +47,16 @@ describe('EntityRefHierarchy', () => {
 	});
 
 	describe('optional ref hierarchy', () => {
-
-		function* list(): Generator<ReturnType<typeof factoryWorkspace> | ReturnType<typeof factoryProject> | ReturnType<typeof factoryCollection> | undefined> {
-			yield undefined;
-			yield REF_PROJECT;
-			yield REF_COLLECTION;
-		}
-
-		const hierarchy = EntityRefHierarchy.fromOptionalRefs(list())!;
-
-
-		it('fails to return hierarchy without refs', () => {
-			function* list(): Generator<ReturnType<typeof factoryWorkspace> | ReturnType<typeof factoryProject> | ReturnType<typeof factoryCollection> | undefined> {
-				yield undefined;
-			}
-
-			const hierarchy = EntityRefHierarchy.fromOptionalRefs(list())
-			expect(hierarchy).toBeUndefined();
-		});
+		const hierarchy = new EntityRefHierarchy([
+			undefined as ReturnType<typeof factoryWorkspace> | undefined,
+			REF_PROJECT,
+			REF_COLLECTION
+		]);
 
 		it('getting root and leaf refs', () => {
-			expect(hierarchy.rootRef())
+			expect(hierarchy.root)
 				.toEqual(REF_PROJECT);
-			expect(hierarchy.leafRef())
+			expect(hierarchy.leaf)
 				.toEqual(REF_COLLECTION);
 		});
 
