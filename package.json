@@ -1,6 +1,6 @@
 {
   "name": "@pallad/entity-ref",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Create small references to entities",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
