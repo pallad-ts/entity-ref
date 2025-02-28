@@ -1,6 +1,6 @@
-import {createFactory} from "@src/createFactory";
+import {createFactory} from "../createFactory";
 import {assert, IsExact} from "conditional-type-checks";
-import {EntityRef} from "@src/EntityRef";
+import {EntityRef} from "../EntityRef";
 
 describe('createFactory', () => {
 	const TYPE = 'user' as const;
@@ -94,7 +94,7 @@ describe('createFactory', () => {
 				num: 1,
 				str: 'foo',
 				undef: undefined,
-				// eslint-disable-next-line no-null/no-null
+				// eslint-disable-next-line no-restricted-syntax
 				null: null
 			} as any);
 

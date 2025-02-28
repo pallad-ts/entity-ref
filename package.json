@@ -2,13 +2,23 @@
   "name": "@pallad/entity-ref",
   "version": "2.4.0",
   "description": "Create small references to entities",
-  "main": "compiled/index.js",
-  "types": "compiled/index.d.ts",
+  "main": "dist/pallad-entity-ref.cjs.js",
+  "module": "dist/pallad-entity-ref.esm.js",
+  "exports": {
+    ".": {
+      "module": "./dist/pallad-entity-ref.esm.js",
+      "default": "./dist/pallad-entity-ref.cjs.js"
+    },
+    "./package.json": "./package.json"
+  },
   "scripts": {
-    "test": "pallad-scripts test",
-    "lint": "pallad-scripts lint",
-    "compile": "pallad-scripts compile",
-    "prepack": "npm run compile"
+    "test": "jest",
+    "lint": "eslint src/**/*.ts",
+    "generate-barrels": "barrelsby -l replace -L --delete -d ./src",
+    "compile": "npm run generate-barrels && preconstruct build",
+    "prepublishOnly": "npm run compile",
+    "setup:dev": "preconstruct dev",
+    "setup:fix": "preconstruct fix"
   },
   "keywords": [
     "entity",
@@ -19,8 +29,14 @@
   "publishConfig": {
     "access": "public"
   },
+  "preconstruct": {
+    "exports": true,
+    "entrypoints": [
+      "./index.ts"
+    ]
+  },
   "files": [
-    "compiled"
+    "dist"
   ],
   "repository": {
     "type": "git",
@@ -33,10 +49,15 @@
   },
   "homepage": "https://github.com/pallad-ts/entity-ref#readme",
   "devDependencies": {
-    "@pallad/scripts": "^3",
+    "@babel/core": "^7.26.9",
+    "@babel/preset-typescript": "^7.26.0",
+    "@pallad/scripts": "^4",
+    "@preconstruct/cli": "^2.8.11",
+    "barrelsby": "^2.8.1",
     "conditional-type-checks": "^1.0.5"
   },
   "dependencies": {
-    "predicates": "^2"
+    "predicates": "^2",
+    "shallow-equal": "^3.1.0"
   }
 }

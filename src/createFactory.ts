@@ -31,8 +31,10 @@ export function createFactory<TType extends string,
 		}
 	}
 
-	return f as any;
+	return f as never;
 }
+
+export type EntityRefFactoryType<TFactory extends Factory<string, any>> = ReturnType<TFactory>;
 
 export interface Factory<TType extends string, TFactory extends (...args: any[]) => any> {
 	(...args: Parameters<TFactory>): EntityRef<TType, ReturnType<TFactory>>;
