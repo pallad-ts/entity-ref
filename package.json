@@ -1,6 +1,6 @@
 {
   "name": "@pallad/entity-ref",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "description": "Create small references to entities",
   "main": "dist/pallad-entity-ref.cjs.js",
   "module": "dist/pallad-entity-ref.esm.js",
